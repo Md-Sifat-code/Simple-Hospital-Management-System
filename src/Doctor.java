@@ -1,55 +1,76 @@
 import java.util.Scanner;
 
-public class Doctor extends Patient{
-    private String name_of_Doctor;
-    private String Id_of_Doctor;
-    private int Room_Number_of_Doctor;
-    public String Doctor_type[3];
-    private double BiLL = 0;
-    int count =0;
+public class Doctor extends Patient {
+    private String nameOfDoctor;
+    private String idOfDoctor;
+    private int roomNumberOfDoctor;
+    private String[] doctorType = new String[4];
+    private double bill = 0;
     Scanner sc1 = new Scanner(System.in);
 
-    public Doctor(String name_of_Doctor, String Id_of_Doctor,int Room_Number_of_Doctor){
+    public Doctor(String nameOfDoctor, String idOfDoctor, int roomNumberOfDoctor) {
         super();
-        this.name_of_Doctor =name_of_Doctor;
-        this.Id_of_Doctor = Id_of_Doctor;
-        this.Room_Number_of_Doctor = Room_Number_of_Doctor;
+        this.nameOfDoctor = nameOfDoctor;
+        this.idOfDoctor = idOfDoctor;
+        this.roomNumberOfDoctor = roomNumberOfDoctor;
     }
 
-    public String getId_of_Doctor() {
-        return Id_of_Doctor;
+    public String getIdOfDoctor() {
+        return idOfDoctor;
     }
 
-    public String getName_of_Doctor(){
-        return name_of_Doctor;
+    public String getNameOfDoctor() {
+        return nameOfDoctor;
     }
 
-    public int getRoom_Number_of_Doctor() {
-        return Room_Number_of_Doctor;
+    public int getRoomNumberOfDoctor() {
+        return roomNumberOfDoctor;
     }
-    public void which_Doctor(){
-        System.out.println("Enter the Doctor Type: ");
-        for(int i=0;i<4;i++){
-            Doctor_type[i] = sc1.nextLine();
+
+    public void whichDoctor() {
+        System.out.println("Enter the Doctor Type (e.g., Head Related, Body Related, Hand or Foot Related, Internal Related): ");
+        for (int i = 0; i < 4; i++) {
+            doctorType[i] = sc1.nextLine();
         }
     }
-    public void assign_Doctor(String x){
-        x = getPatient_type();
-        if(x == Doctor_type[0]){
-            System.out.println("You need to go the "+name_of_Doctor+"His Id number is : "+Id_of_Doctor+"He is at "+Room_Number_of_Doctor+"He is Specialist in "+Doctor_type);
-        } else if (x == Doctor_type[1]) {
-            System.out.println("You need to go the "+name_of_Doctor+"His Id number is : "+Id_of_Doctor+"He is at "+Room_Number_of_Doctor+"He is Specialist in "+Doctor_type);
 
-        }else if (x == Doctor_type[2]) {
-            System.out.println("You need to go the "+name_of_Doctor+"His Id number is : "+Id_of_Doctor+"He is at "+Room_Number_of_Doctor+"He is Specialist in "+Doctor_type);
-
-        } else if (x == Doctor_type[3]) {
-            System.out.println("You need to go the "+name_of_Doctor+"His Id number is : "+Id_of_Doctor+"He is at "+Room_Number_of_Doctor+"He is Specialist in "+Doctor_type);
-
+    public void assignDoctor() {
+        String x = getPatientType();
+        if (x == null) {
+            System.out.println("Patient type is not set.");
+            return;
         }
 
+        for (int i = 0; i < doctorType.length; i++) {
+            if (x.equals(doctorType[i])) {
+                System.out.println("You need to go to Dr. " + nameOfDoctor + ". His Id number is: " + idOfDoctor +
+                        ". He is at room number " + roomNumberOfDoctor + ". He is a Specialist in " + doctorType[i]);
+                return;
+            }
         }
-
+        System.out.println("You haven't got any appointment");
     }
 
+    public void assignBills() {
+        double y = this.bill;
+        String z = getPatientType();
+        if (z == null) {
+            System.out.println("Patient type is not set.");
+            return;
+        }
+
+        if (z.equals(doctorType[0])) {
+            y += 500;
+        } else if (z.equals(doctorType[1])) {
+            y += 600;
+        } else if (z.equals(doctorType[2])) {
+            y += 700;
+        } else if (z.equals(doctorType[3])) {
+            y += 1500;
+        } else {
+            System.out.println("No Bill need to pay");
+            return;
+        }
+        System.out.println("You need to pay: " + y);
+    }
 }
